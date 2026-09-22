@@ -1,0 +1,1516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#101716">
+<title>FrankO's Framework</title>
+
+<style>
+:root {
+  --bg:#0d1211;
+  --panel:#151d1b;
+  --panel2:#1b2623;
+  --border:#293632;
+  --text:#f2f6f4;
+  --muted:#98aaa4;
+  --green:#72d2a5;
+  --green-dark:#1c5b43;
+  --amber:#efc36b;
+  --blue:#7db9e8;
+  --red:#e88982;
+  --radius:20px;
+}
+
+* { box-sizing:border-box; }
+
+body {
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+}
+
+button,input,select,textarea { font:inherit; }
+
+button { -webkit-tap-highlight-color:transparent; }
+
+.app {
+  max-width:850px;
+  margin:auto;
+  padding:20px 16px 110px;
+}
+
+.header {
+  margin-bottom:22px;
+}
+
+.brand {
+  color:var(--green);
+  font-size:12px;
+  font-weight:800;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+}
+
+h1 {
+  margin:6px 0;
+  font-size:34px;
+  line-height:1.05;
+}
+
+.subtitle {
+  color:var(--muted);
+  line-height:1.45;
+}
+
+.card {
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:18px;
+  margin-bottom:16px;
+}
+
+.section-head {
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:12px;
+  margin-bottom:14px;
+}
+
+.section-title {
+  font-size:20px;
+  font-weight:850;
+}
+
+.section-sub {
+  color:var(--muted);
+  font-size:13px;
+  margin-top:3px;
+}
+
+.badge {
+  border-radius:999px;
+  padding:7px 10px;
+  font-size:11px;
+  font-weight:850;
+  text-transform:uppercase;
+  letter-spacing:.07em;
+  background:#193a2d;
+  color:var(--green);
+}
+
+.day-toggle {
+  display:flex;
+  gap:8px;
+  margin-top:14px;
+}
+
+.toggle {
+  flex:1;
+  min-height:44px;
+  border-radius:13px;
+  border:1px solid var(--border);
+  background:var(--panel2);
+  color:var(--text);
+  font-weight:750;
+}
+
+.toggle.active {
+  background:var(--green);
+  color:#092018;
+  border-color:var(--green);
+}
+
+.task {
+  display:grid;
+  grid-template-columns:62px 1fr 38px;
+  gap:10px;
+  align-items:center;
+  padding:12px 0;
+  border-bottom:1px solid var(--border);
+}
+
+.task:last-child { border-bottom:none; }
+
+.time {
+  color:var(--muted);
+  font-size:13px;
+  font-weight:750;
+}
+
+.task-title { font-weight:800; }
+
+.task-note {
+  color:var(--muted);
+  font-size:12px;
+  margin-top:3px;
+}
+
+.check {
+  width:34px;
+  height:34px;
+  border-radius:50%;
+  border:1px solid var(--border);
+  background:transparent;
+  color:white;
+  font-size:18px;
+}
+
+.check.done {
+  background:var(--green-dark);
+  border-color:var(--green);
+}
+
+.options {
+  display:grid;
+  gap:10px;
+}
+
+.option {
+  width:100%;
+  text-align:left;
+  padding:15px;
+  border-radius:15px;
+  border:1px solid var(--border);
+  background:var(--panel2);
+  color:var(--text);
+}
+
+.option-tag {
+  color:var(--green);
+  font-size:11px;
+  font-weight:850;
+  text-transform:uppercase;
+  letter-spacing:.08em;
+}
+
+.option-title {
+  font-size:17px;
+  font-weight:850;
+  margin-top:5px;
+}
+
+.option-meta {
+  color:var(--muted);
+  font-size:12px;
+  margin-top:5px;
+}
+
+.actions {
+  display:flex;
+  gap:8px;
+  margin-top:12px;
+}
+
+.btn {
+  border:1px solid var(--border);
+  border-radius:12px;
+  background:var(--panel2);
+  color:var(--text);
+  padding:11px 14px;
+  font-weight:800;
+}
+
+.btn.primary {
+  background:var(--green);
+  color:#092018;
+  border-color:var(--green);
+}
+
+.btn.danger { color:var(--red); }
+
+.current {
+  display:none;
+  margin-top:14px;
+  padding:15px;
+  border-radius:15px;
+  background:#173528;
+  border:1px solid var(--green-dark);
+}
+
+.current.show { display:block; }
+
+.current-label {
+  color:var(--green);
+  font-size:11px;
+  font-weight:850;
+  letter-spacing:.08em;
+}
+
+.anchor {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  padding:11px 0;
+  border-bottom:1px solid var(--border);
+}
+
+.anchor:last-child { border-bottom:none; }
+
+.week-row {
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:10px;
+  align-items:center;
+  padding:11px 0;
+  border-bottom:1px solid var(--border);
+}
+
+.counter {
+  display:flex;
+  align-items:center;
+  gap:7px;
+}
+
+.smallbtn {
+  width:34px;
+  height:34px;
+  border-radius:10px;
+  border:1px solid var(--border);
+  background:var(--panel2);
+  color:var(--text);
+}
+
+.count {
+  min-width:42px;
+  text-align:center;
+  font-weight:850;
+}
+
+input,textarea,select {
+  width:100%;
+  background:var(--panel2);
+  border:1px solid var(--border);
+  color:var(--text);
+  border-radius:12px;
+  padding:12px;
+  margin-top:8px;
+}
+
+textarea {
+  min-height:80px;
+  resize:vertical;
+}
+
+.form-grid {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+}
+
+.item {
+  padding:13px;
+  border-radius:14px;
+  background:var(--panel2);
+  border:1px solid var(--border);
+  margin-top:9px;
+}
+
+.item-top {
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+}
+
+.item-title { font-weight:850; }
+
+.item-meta {
+  color:var(--muted);
+  font-size:12px;
+  margin-top:4px;
+}
+
+.item.completed {
+  opacity:.55;
+}
+
+.item.completed .item-title {
+  text-decoration:line-through;
+}
+
+.progress-number {
+  font-size:28px;
+  font-weight:900;
+}
+
+.complete-banner {
+  display:none;
+  text-align:center;
+  background:linear-gradient(135deg,#163729,var(--panel));
+  border:1px solid var(--green-dark);
+}
+
+.complete-banner.show { display:block; }
+
+.complete-title {
+  font-size:38px;
+  font-weight:950;
+}
+
+.nav {
+  position:fixed;
+  bottom:0;
+  left:0;
+  right:0;
+  background:rgba(13,18,17,.96);
+  backdrop-filter:blur(12px);
+  border-top:1px solid var(--border);
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  padding:8px 8px calc(8px + env(safe-area-inset-bottom));
+  z-index:10;
+}
+
+.nav button {
+  border:none;
+  background:transparent;
+  color:var(--muted);
+  padding:10px 4px;
+  font-size:12px;
+  font-weight:800;
+}
+
+.nav button.active { color:var(--green); }
+
+.page { display:none; }
+.page.active { display:block; }
+
+.empty {
+  color:var(--muted);
+  padding:12px 0;
+}
+
+.quote {
+  border-left:3px solid var(--green);
+  padding-left:12px;
+  color:var(--muted);
+  margin-top:12px;
+}
+
+@media(max-width:520px) {
+  .app { padding-left:13px; padding-right:13px; }
+  h1 { font-size:30px; }
+  .form-grid { grid-template-columns:1fr; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<section id="today" class="page active">
+
+<header class="header">
+  <div class="brand">FrankO's Framework</div>
+  <h1 id="todayDate">TODAY</h1>
+  <div class="subtitle">
+    See it. Do it. Check it off. Keep moving.
+  </div>
+
+  <div class="day-toggle">
+    <button id="standardBtn" class="toggle active">Standard Day</button>
+    <button id="connectionBtn" class="toggle">Connection Day</button>
+  </div>
+</header>
+
+<div class="card">
+  <div class="section-head">
+    <div>
+      <div class="section-title">Momentum</div>
+      <div class="section-sub">Fewer decisions. Get moving.</div>
+    </div>
+    <div class="badge">Launch</div>
+  </div>
+  <div id="morningList"></div>
+</div>
+
+<div class="card">
+  <div class="section-head">
+    <div>
+      <div class="section-title">Direction</div>
+      <div class="section-sub">One good next move.</div>
+    </div>
+    <div class="badge">Choose</div>
+  </div>
+
+  <div id="directionOptions" class="options"></div>
+
+  <div class="actions">
+    <button id="chooseForMe" class="btn primary">✦ Choose For Me</button>
+    <button id="refreshChoices" class="btn">Refresh</button>
+  </div>
+
+  <div id="currentBlock" class="current">
+    <div class="current-label">DO THIS NOW</div>
+    <div id="currentTitle" class="option-title"></div>
+    <div id="currentMeta" class="option-meta"></div>
+
+    <div class="actions">
+      <button id="finishBlock" class="btn primary">✓ Complete</button>
+      <button id="cancelBlock" class="btn">Change</button>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="section-head">
+    <div>
+      <div class="section-title">Daily Anchors</div>
+      <div class="section-sub">The rails that make the rest easier.</div>
+    </div>
+  </div>
+  <div id="anchorList"></div>
+</div>
+
+<div class="card">
+  <div class="section-head">
+    <div>
+      <div class="section-title">Weekly Commitments</div>
+      <div class="section-sub">Consistency beats monster days.</div>
+    </div>
+  </div>
+  <div id="weeklyList"></div>
+</div>
+
+<div class="card">
+  <div class="section-head">
+    <div>
+      <div class="section-title">Open</div>
+      <div class="section-sub">The Framework backs off.</div>
+    </div>
+    <div class="badge">Live</div>
+  </div>
+
+  <div class="subtitle">
+    Keep going if momentum is there. Lift. Clean. Organize. Learn.
+    Drum. Get outside. Spend time with Dee. Or stop.
+  </div>
+</div>
+
+<div id="dayComplete" class="card complete-banner">
+  <div class="complete-title">DAY COMPLETE</div>
+  <div class="subtitle">
+    You did what you said you were going to do.
+  </div>
+</div>
+
+</section>
+
+
+<section id="plan" class="page">
+
+<header class="header">
+  <div class="brand">FrankO's Framework</div>
+  <h1>This Week</h1>
+  <div class="subtitle">Athletic nerd. Clear house. Clear brain.</div>
+</header>
+
+<div class="card">
+  <div class="section-title">Current Sprint</div>
+  <h2>ATHLETIC NERD: HOUSE RESET</h2>
+
+  <div class="quote">
+    Play creates momentum. Structure channels it.
+  </div>
+</div>
+
+<div class="card">
+  <div class="section-title">This Week's Focus</div>
+
+  <div class="item">
+    <div class="item-title">🏠 House</div>
+    <div class="item-meta">Organize · purge · donate · clean · finish</div>
+  </div>
+
+  <div class="item">
+    <div class="item-title">💪 Body</div>
+    <div class="item-meta">Move · lift · eat intentionally · sleep</div>
+  </div>
+
+  <div class="item">
+    <div class="item-title">🧠 Brain</div>
+    <div class="item-meta">AI · Coursera · build · meditate</div>
+  </div>
+
+  <div class="item">
+    <div class="item-title">🎵 Play</div>
+    <div class="item-meta">Drums · golf · disc golf · curiosity</div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="section-title">Top 3 Priorities</div>
+
+  <input id="priority1" placeholder="Priority #1">
+  <input id="priority2" placeholder="Priority #2">
+  <input id="priority3" placeholder="Priority #3">
+
+  <div class="actions">
+    <button id="savePriorities" class="btn primary">Save Priorities</button>
+  </div>
+</div>
+
+</section>
+
+
+<section id="projects" class="page">
+
+<header class="header">
+  <div class="brand">FrankO's Framework</div>
+  <h1>Projects & Missions</h1>
+  <div class="subtitle">
+    Get it out of your head and give it a next action.
+  </div>
+</header>
+
+<div class="card">
+  <div class="section-title">Add Something</div>
+
+  <input id="newTitle" placeholder="What needs to get done?">
+
+  <div class="form-grid">
+    <select id="newType">
+      <option value="mission">Mission</option>
+      <option value="project">Project</option>
+    </select>
+
+    <select id="newCategory">
+      <option>House</option>
+      <option>Body</option>
+      <option>Brain</option>
+      <option>Life</option>
+      <option>Music</option>
+    </select>
+  </div>
+
+  <input id="newNext" placeholder="Next action">
+
+  <div class="form-grid">
+    <input id="newMinutes" type="number" min="5" placeholder="Minutes">
+    <input id="newDeadline" type="date">
+  </div>
+
+  <button id="addProject" class="btn primary" style="margin-top:10px">
+    + Add
+  </button>
+</div>
+
+<div class="card">
+  <div class="section-title">Active</div>
+  <div id="projectList"></div>
+</div>
+
+<div class="card">
+  <div class="section-title">Completed</div>
+  <div id="completedList"></div>
+</div>
+
+</section>
+
+
+<section id="progress" class="page">
+
+<header class="header">
+  <div class="brand">FrankO's Framework</div>
+  <h1>Progress</h1>
+  <div class="subtitle">
+    Evidence that you're actually doing the shit.
+  </div>
+</header>
+
+<div class="card">
+  <div class="section-title">This Week</div>
+  <div id="progressWeekly"></div>
+</div>
+
+<div class="card">
+  <div class="section-title">Recent Days</div>
+  <div id="historyList"></div>
+</div>
+
+<div class="card">
+  <div class="section-title">Framework Data</div>
+  <div class="section-sub">
+    V1 stores your data in this browser on this device.
+  </div>
+
+  <div class="actions">
+    <button id="exportData" class="btn">Export Backup</button>
+    <button id="resetData" class="btn danger">Reset Data</button>
+  </div>
+</div>
+
+</section>
+
+</div>
+
+
+<nav class="nav">
+  <button data-page="today" class="active">✓<br>Today</button>
+  <button data-page="plan">◇<br>Plan</button>
+  <button data-page="projects">▣<br>Projects</button>
+  <button data-page="progress">↗<br>Progress</button>
+</nav>
+
+
+<script>
+const STORAGE_KEY = "frankoFrameworkV1";
+
+const defaultState = {
+  lastDate: null,
+  weekKey: null,
+
+  today: {
+    date: null,
+    dayType: "standard",
+    morning: {},
+    anchors: {},
+    completedBlocks: 0
+  },
+
+  weekly: {
+    strength: 0,
+    drumeo: 0,
+    house: 0
+  },
+
+  priorities: ["", "", ""],
+
+  projects: [
+    {
+      id: 1,
+      title: "House Reset",
+      type: "project",
+      category: "House",
+      next: "Choose one zone and finish a complete pass",
+      minutes: 45,
+      deadline: "",
+      completed: false
+    },
+    {
+      id: 2,
+      title: "Donation / Purge Run",
+      type: "mission",
+      category: "House",
+      next: "Fill one donation load",
+      minutes: 45,
+      deadline: "",
+      completed: false
+    },
+    {
+      id: 3,
+      title: "AI Skill Development",
+      type: "project",
+      category: "Brain",
+      next: "Complete the next structured learning block",
+      minutes: 60,
+      deadline: "",
+      completed: false
+    }
+  ],
+
+  history: []
+};
+
+
+function clone(obj) {
+  return JSON.parse(JSON.stringify(obj));
+}
+
+
+function loadState() {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+
+    if (!saved) return clone(defaultState);
+
+    const parsed = JSON.parse(saved);
+
+    return {
+      ...clone(defaultState),
+      ...parsed,
+      today: {
+        ...clone(defaultState.today),
+        ...(parsed.today || {})
+      },
+      weekly: {
+        ...clone(defaultState.weekly),
+        ...(parsed.weekly || {})
+      }
+    };
+
+  } catch {
+    return clone(defaultState);
+  }
+}
+
+
+let state = loadState();
+
+
+function save() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+}
+
+
+function dateKey(date = new Date()) {
+  const y = date.getFullYear();
+  const m = String(date.getMonth()+1).padStart(2,"0");
+  const d = String(date.getDate()).padStart(2,"0");
+
+  return `${y}-${m}-${d}`;
+}
+
+
+function getWeekKey(date = new Date()) {
+  const d = new Date(date);
+  const day = d.getDay();
+  const diff = day === 0 ? -6 : 1-day;
+
+  d.setDate(d.getDate()+diff);
+
+  return dateKey(d);
+}
+
+
+function rollover() {
+
+  const today = dateKey();
+  const week = getWeekKey();
+
+  if (!state.today.date) {
+    state.today.date = today;
+  }
+
+  if (state.today.date !== today) {
+
+    state.history.unshift({
+      date: state.today.date,
+      dayType: state.today.dayType,
+      anchorsCompleted:
+        Object.values(state.today.anchors || {}).filter(Boolean).length,
+      completedBlocks: state.today.completedBlocks || 0
+    });
+
+    state.history = state.history.slice(0,60);
+
+    state.today = {
+      date: today,
+      dayType: "standard",
+      morning: {},
+      anchors: {},
+      completedBlocks: 0
+    };
+  }
+
+  if (!state.weekKey) {
+    state.weekKey = week;
+  }
+
+  if (state.weekKey !== week) {
+    state.weekKey = week;
+
+    state.weekly = {
+      strength:0,
+      drumeo:0,
+      house:0
+    };
+  }
+
+  state.lastDate = today;
+
+  save();
+}
+
+
+rollover();
+
+
+const standardMorning = [
+  ["6:00","Wake + Launch","Water · dressed · minimal phone"],
+  ["6:30","Outdoor Movement","Walk · hike · golf · disc golf"],
+  ["8:00","Animals + Reset","Feed animals · transition inside"],
+  ["8:15","Career Block","Coursera first · applied AI second"],
+  ["9:30","Nutrition","Protein · intentional start"],
+  ["10:30","Reset","Eat · reset · move into Direction"]
+];
+
+
+const connectionMorning = [
+  ["6:00","Wake + Launch","Keep the sleep/wake anchor"],
+  ["6:30","Movement","Keep momentum without forcing intensity"],
+  ["8:00","Animals + Reset","Feed animals · transition"],
+  ["8:15","Career Touchpoint","Short block or intentional skip"],
+  ["9:30","Nutrition","Keep the food boundary"],
+  ["10:30","Connection / Open","Different success criteria today"]
+];
+
+
+const anchors = [
+  ["wake","6:00 Wake","Protect the launch"],
+  ["move","Morning Movement","Continuous movement"],
+  ["career","Career Block","Learning + applied AI"],
+  ["meditate","Meditation · 15 min","Any time"],
+  ["nutrition","Nutrition Boundary","Finish around 5:30–6:00"],
+  ["shutdown","Evening Shutdown","Around 8:00–8:30"],
+  ["bed","Bed / Reading","Around 9:00"]
+];
+
+
+const weeklyGoals = [
+  ["strength","Strength",3],
+  ["drumeo","Drumeo",5],
+  ["house","House Reset",5]
+];
+
+
+function formatToday() {
+  document.getElementById("todayDate").textContent =
+    new Date().toLocaleDateString(undefined,{
+      weekday:"long",
+      month:"short",
+      day:"numeric"
+    }).toUpperCase();
+}
+
+
+function renderDayType() {
+
+  document.getElementById("standardBtn")
+    .classList.toggle("active",state.today.dayType==="standard");
+
+  document.getElementById("connectionBtn")
+    .classList.toggle("active",state.today.dayType==="connection");
+}
+
+
+function renderMorning() {
+
+  const container = document.getElementById("morningList");
+
+  container.innerHTML="";
+
+  const items =
+    state.today.dayType==="standard"
+      ? standardMorning
+      : connectionMorning;
+
+  items.forEach((item,i)=>{
+
+    const row=document.createElement("div");
+    row.className="task";
+
+    row.innerHTML=`
+      <div class="time">${item[0]}</div>
+      <div>
+        <div class="task-title">${item[1]}</div>
+        <div class="task-note">${item[2]}</div>
+      </div>
+    `;
+
+    const button=document.createElement("button");
+
+    button.className =
+      "check "+(state.today.morning[i]?"done":"");
+
+    button.textContent =
+      state.today.morning[i] ? "✓" : "";
+
+    button.onclick=()=>{
+
+      state.today.morning[i]=!state.today.morning[i];
+
+      if(i===0) state.today.anchors.wake=state.today.morning[i];
+      if(i===1) state.today.anchors.move=state.today.morning[i];
+      if(i===3) state.today.anchors.career=state.today.morning[i];
+
+      save();
+      renderAll();
+    };
+
+    row.appendChild(button);
+    container.appendChild(row);
+  });
+}
+
+
+function renderAnchors() {
+
+  const container=document.getElementById("anchorList");
+
+  container.innerHTML="";
+
+  anchors.forEach(([id,title,note])=>{
+
+    const row=document.createElement("div");
+    row.className="anchor";
+
+    row.innerHTML=`
+      <div>
+        <div class="task-title">${title}</div>
+        <div class="task-note">${note}</div>
+      </div>
+    `;
+
+    const button=document.createElement("button");
+
+    button.className =
+      "check "+(state.today.anchors[id]?"done":"");
+
+    button.textContent =
+      state.today.anchors[id] ? "✓" : "";
+
+    button.onclick=()=>{
+
+      state.today.anchors[id]=!state.today.anchors[id];
+
+      save();
+      renderAll();
+    };
+
+    row.appendChild(button);
+    container.appendChild(row);
+  });
+}
+
+
+function renderWeekly() {
+
+  const container=document.getElementById("weeklyList");
+
+  container.innerHTML="";
+
+  weeklyGoals.forEach(([id,title,goal])=>{
+
+    const row=document.createElement("div");
+    row.className="week-row";
+
+    row.innerHTML=`
+      <div>
+        <div class="task-title">${title}</div>
+        <div class="task-note">Weekly target: ${goal}</div>
+      </div>
+    `;
+
+    const controls=document.createElement("div");
+    controls.className="counter";
+
+    const minus=document.createElement("button");
+    minus.className="smallbtn";
+    minus.textContent="−";
+
+    minus.onclick=()=>{
+      state.weekly[id]=Math.max(0,state.weekly[id]-1);
+      save();
+      renderAll();
+    };
+
+    const count=document.createElement("div");
+    count.className="count";
+    count.textContent=`${state.weekly[id]}/${goal}`;
+
+    const plus=document.createElement("button");
+    plus.className="smallbtn";
+    plus.textContent="+";
+
+    plus.onclick=()=>{
+      state.weekly[id]++;
+      save();
+      renderAll();
+    };
+
+    controls.append(minus,count,plus);
+    row.appendChild(controls);
+    container.appendChild(row);
+  });
+}
+
+
+function activeProjects() {
+  return state.projects.filter(p=>!p.completed);
+}
+
+
+let displayedChoices=[];
+let currentChoice=null;
+
+
+function buildChoices() {
+
+  const active=activeProjects();
+
+  const choices=[];
+
+  if(state.weekly.house<5) {
+    choices.push({
+      title:"House Reset Sprint",
+      category:"House",
+      meta:"30–45 min · organize · purge · donate · clean"
+    });
+  }
+
+  if(state.weekly.strength<3) {
+    choices.push({
+      title:"Strength Circuit",
+      category:"Body",
+      meta:"20–30 min · continuous dumbbell flow"
+    });
+  }
+
+  if(state.weekly.drumeo<5) {
+    choices.push({
+      title:"Drumeo Lesson",
+      category:"Music",
+      meta:"20 min · technical practice"
+    });
+  }
+
+  active.slice(0,4).forEach(p=>{
+    choices.push({
+      title:p.title,
+      category:p.category,
+      meta:p.next || `${p.minutes || 30} minute block`
+    });
+  });
+
+  choices.push({
+    title:"AI Skill Block",
+    category:"Brain",
+    meta:"45–60 min · structured learning or applied build"
+  });
+
+  displayedChoices =
+    choices
+      .filter((x,i,a)=>
+        a.findIndex(y=>y.title===x.title)===i
+      )
+      .slice(0,3);
+}
+
+
+function renderChoices() {
+
+  if(!displayedChoices.length) buildChoices();
+
+  const container=document.getElementById("directionOptions");
+
+  container.innerHTML="";
+
+  displayedChoices.forEach(choice=>{
+
+    const button=document.createElement("button");
+    button.className="option";
+
+    button.innerHTML=`
+      <div class="option-tag">${choice.category}</div>
+      <div class="option-title">${choice.title}</div>
+      <div class="option-meta">${choice.meta}</div>
+    `;
+
+    button.onclick=()=>selectChoice(choice);
+
+    container.appendChild(button);
+  });
+}
+
+
+function selectChoice(choice) {
+
+  currentChoice=choice;
+
+  document.getElementById("currentTitle").textContent=choice.title;
+  document.getElementById("currentMeta").textContent=choice.meta;
+
+  document.getElementById("currentBlock").classList.add("show");
+}
+
+
+function chooseForMe() {
+
+  if(!displayedChoices.length) buildChoices();
+
+  const choice =
+    displayedChoices[
+      Math.floor(Math.random()*displayedChoices.length)
+    ];
+
+  selectChoice(choice);
+}
+
+
+function finishCurrentBlock() {
+
+  if(!currentChoice) return;
+
+  const title=currentChoice.title.toLowerCase();
+
+  if(title.includes("strength")) state.weekly.strength++;
+
+  if(title.includes("drumeo")) state.weekly.drumeo++;
+
+  if(
+    title.includes("house") ||
+    title.includes("clean") ||
+    title.includes("donation") ||
+    title.includes("purge")
+  ) state.weekly.house++;
+
+  state.today.completedBlocks++;
+
+  currentChoice=null;
+  displayedChoices=[];
+
+  document.getElementById("currentBlock").classList.remove("show");
+
+  save();
+  renderAll();
+}
+
+
+function renderProjects() {
+
+  const active=document.getElementById("projectList");
+  const completed=document.getElementById("completedList");
+
+  active.innerHTML="";
+  completed.innerHTML="";
+
+  state.projects.forEach(project=>{
+
+    const item=document.createElement("div");
+
+    item.className=
+      "item "+(project.completed?"completed":"");
+
+    item.innerHTML=`
+      <div class="item-top">
+        <div>
+          <div class="option-tag">
+            ${project.type} · ${project.category}
+          </div>
+          <div class="item-title">${escapeHTML(project.title)}</div>
+          <div class="item-meta">
+            ${escapeHTML(project.next || "No next action")}
+            ${project.minutes ? " · "+project.minutes+" min" : ""}
+            ${project.deadline ? " · Due "+project.deadline : ""}
+          </div>
+        </div>
+      </div>
+    `;
+
+    const actions=document.createElement("div");
+    actions.className="actions";
+
+    const complete=document.createElement("button");
+    complete.className="btn";
+
+    complete.textContent =
+      project.completed ? "Reopen" : "✓ Complete";
+
+    complete.onclick=()=>{
+      project.completed=!project.completed;
+      save();
+      displayedChoices=[];
+      renderAll();
+    };
+
+    const remove=document.createElement("button");
+    remove.className="btn danger";
+    remove.textContent="Delete";
+
+    remove.onclick=()=>{
+      if(confirm(`Delete "${project.title}"?`)) {
+        state.projects=
+          state.projects.filter(p=>p.id!==project.id);
+
+        save();
+        displayedChoices=[];
+        renderAll();
+      }
+    };
+
+    actions.append(complete,remove);
+    item.appendChild(actions);
+
+    if(project.completed)
+      completed.appendChild(item);
+    else
+      active.appendChild(item);
+  });
+
+  if(!active.children.length)
+    active.innerHTML='<div class="empty">Nothing active.</div>';
+
+  if(!completed.children.length)
+    completed.innerHTML='<div class="empty">Nothing completed yet.</div>';
+}
+
+
+function escapeHTML(value) {
+  const div=document.createElement("div");
+  div.textContent=value || "";
+  return div.innerHTML;
+}
+
+
+function addProject() {
+
+  const title=
+    document.getElementById("newTitle").value.trim();
+
+  if(!title) return;
+
+  state.projects.push({
+    id:Date.now(),
+    title,
+    type:document.getElementById("newType").value,
+    category:document.getElementById("newCategory").value,
+    next:document.getElementById("newNext").value.trim(),
+    minutes:Number(document.getElementById("newMinutes").value)||0,
+    deadline:document.getElementById("newDeadline").value,
+    completed:false
+  });
+
+  ["newTitle","newNext","newMinutes","newDeadline"]
+    .forEach(id=>document.getElementById(id).value="");
+
+  displayedChoices=[];
+
+  save();
+  renderAll();
+}
+
+
+function renderPriorities() {
+
+  document.getElementById("priority1").value=
+    state.priorities[0] || "";
+
+  document.getElementById("priority2").value=
+    state.priorities[1] || "";
+
+  document.getElementById("priority3").value=
+    state.priorities[2] || "";
+}
+
+
+function savePriorities() {
+
+  state.priorities=[
+    document.getElementById("priority1").value.trim(),
+    document.getElementById("priority2").value.trim(),
+    document.getElementById("priority3").value.trim()
+  ];
+
+  save();
+
+  alert("Priorities saved.");
+}
+
+
+function renderProgress() {
+
+  const weekly=document.getElementById("progressWeekly");
+
+  weekly.innerHTML=weeklyGoals.map(([id,title,goal])=>`
+    <div class="week-row">
+      <div>
+        <div class="task-title">${title}</div>
+        <div class="task-note">Target ${goal}</div>
+      </div>
+      <div class="progress-number">
+        ${state.weekly[id]}/${goal}
+      </div>
+    </div>
+  `).join("");
+
+
+  const history=document.getElementById("historyList");
+
+  if(!state.history.length) {
+    history.innerHTML=
+      '<div class="empty">Your completed days will start appearing here after the first daily rollover.</div>';
+
+    return;
+  }
+
+  history.innerHTML=state.history.map(day=>`
+    <div class="item">
+      <div class="item-title">${day.date}</div>
+      <div class="item-meta">
+        ${day.dayType==="connection" ? "Connection Day" : "Standard Day"}
+        · ${day.anchorsCompleted} anchors
+        · ${day.completedBlocks} direction blocks
+      </div>
+    </div>
+  `).join("");
+}
+
+
+function updateDayComplete() {
+
+  const required =
+    state.today.dayType==="connection"
+      ? ["wake","meditate","nutrition","shutdown","bed"]
+      : ["wake","move","career","meditate","nutrition","shutdown","bed"];
+
+  const anchorsDone=
+    required.every(id=>state.today.anchors[id]);
+
+  const directionDone=
+    state.today.dayType==="connection"
+      ? true
+      : state.today.completedBlocks>=1;
+
+  document.getElementById("dayComplete")
+    .classList.toggle(
+      "show",
+      anchorsDone && directionDone
+    );
+}
+
+
+function renderAll() {
+
+  formatToday();
+  renderDayType();
+  renderMorning();
+  renderAnchors();
+  renderWeekly();
+  renderChoices();
+  renderProjects();
+  renderPriorities();
+  renderProgress();
+  updateDayComplete();
+}
+
+
+document.getElementById("standardBtn").onclick=()=>{
+  state.today.dayType="standard";
+  save();
+  renderAll();
+};
+
+
+document.getElementById("connectionBtn").onclick=()=>{
+
+  if(state.today.dayType==="standard") {
+
+    const ok=confirm(
+      "Switch today to a Connection Day? Use this intentionally rather than as an escape hatch."
+    );
+
+    if(!ok) return;
+  }
+
+  state.today.dayType="connection";
+
+  save();
+  renderAll();
+};
+
+
+document.getElementById("chooseForMe").onclick=chooseForMe;
+
+
+document.getElementById("refreshChoices").onclick=()=>{
+  displayedChoices=[];
+
+  const all=activeProjects();
+
+  if(all.length>0) {
+    const first=all.shift();
+    all.push(first);
+  }
+
+  buildChoices();
+  renderChoices();
+};
+
+
+document.getElementById("finishBlock").onclick=finishCurrentBlock;
+
+
+document.getElementById("cancelBlock").onclick=()=>{
+  currentChoice=null;
+  document.getElementById("currentBlock").classList.remove("show");
+};
+
+
+document.getElementById("addProject").onclick=addProject;
+
+
+document.getElementById("savePriorities").onclick=savePriorities;
+
+
+document.querySelectorAll(".nav button").forEach(button=>{
+
+  button.onclick=()=>{
+
+    document.querySelectorAll(".nav button")
+      .forEach(b=>b.classList.remove("active"));
+
+    button.classList.add("active");
+
+    document.querySelectorAll(".page")
+      .forEach(page=>page.classList.remove("active"));
+
+    document.getElementById(button.dataset.page)
+      .classList.add("active");
+
+    window.scrollTo({top:0,behavior:"smooth"});
+  };
+});
+
+
+document.getElementById("exportData").onclick=()=>{
+
+  const blob=new Blob(
+    [JSON.stringify(state,null,2)],
+    {type:"application/json"}
+  );
+
+  const url=URL.createObjectURL(blob);
+
+  const a=document.createElement("a");
+
+  a.href=url;
+  a.download=`franko-framework-backup-${dateKey()}.json`;
+
+  a.click();
+
+  URL.revokeObjectURL(url);
+};
+
+
+document.getElementById("resetData").onclick=()=>{
+
+  const confirmed=confirm(
+    "Reset ALL Framework data on this device? This cannot be undone unless you exported a backup."
+  );
+
+  if(!confirmed) return;
+
+  localStorage.removeItem(STORAGE_KEY);
+
+  state=clone(defaultState);
+
+  rollover();
+
+  displayedChoices=[];
+  currentChoice=null;
+
+  renderAll();
+};
+
+
+renderAll();
+</script>
+
+</body>
+</html>
